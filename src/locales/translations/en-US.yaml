@@ -1,0 +1,10 @@
+home: 'Home'
+configure: 'Configure'
+init:
+  create_session: 'Creating new session'
+  migrate_db: 'Running database migrations'
+  seed_db: 'Seeding database'
+
+  session_check: 'Sesssion check'
+  db_check: 'Database check'
+  db_data_check: 'Database data check'

@@ -1,16 +1,5 @@
-import { createI18n } from 'vue-i18n'
-
-const messages = Object.fromEntries(
-  Object.entries(import.meta.globEager('/src/locales/*.ts')).map(([key, value]) => {
-    return [key.slice(13, -3), value.default]
-  })
-)
+import { i18n } from "src/locales"
 
 export const install = (app: any) => {
-  const i18n = createI18n({
-    locale: 'en',
-    messages,
-  })
-  
   app.use(i18n)
 }

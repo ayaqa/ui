@@ -1,0 +1,27 @@
+en-US:
+  short:
+    year: numeric
+    month: short
+    day: numeric
+  long:
+    year: numeric
+    month: short
+    day: numeric
+    weekday: short
+    hour: numeric
+    minute: numeric
+    hour12: true
+
+bg-BG:
+  short:
+    year: numeric
+    month: numeric
+    day: numeric
+  long:
+    year: numeric
+    month: short
+    day: numeric
+    weekday: short
+    hour: numeric
+    minute: numeric
+    hour12: false

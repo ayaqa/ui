@@ -1,10 +1,13 @@
-import 'quasar/src/css/index.sass'
-import mdiIconSet from 'quasar/icon-set/svg-mdi-v5'
-
 import { Quasar } from 'quasar'
 
+import 'quasar/src/css/index.sass'
+
+import '@quasar/extras/material-icons/material-icons.css'
+
 const config = {
-  iconSet: mdiIconSet,
+  lang: 'en',
+  cssAddon: true,
+  plugins: {}, // Quasar plugins
   config: {
     brand: {
       primary: 'rgb(0,150,136)',
@@ -18,8 +21,7 @@ const config = {
       info: '#31CCEC',
       warning: '#F2C037'
     }
-  },
-  plugins: {}, // Quasar plugins
+  }
 }
 
 export const install = (app: any) => {
