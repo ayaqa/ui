@@ -7,22 +7,14 @@
             <q-item-section>{{ item.title }}</q-item-section>
             <q-item-section side>
                 <q-spinner-pie size="sm" v-if="item.state.value === 'loading'" />
-                <q-icon
-                    name="check_circle_outline"
-                    color="green"
-                    v-if="item.state.value === 'done'"
-                />
+                <q-icon name="check_circle_outline" color="green" v-if="item.state.value === 'done'" />
             </q-item-section>
         </q-item>
-        <q-inner-loading
-            :showing="showLoading"
-            label-class="text-teal"
-            label-style="font-size: 1.1em"
-        />
+        <q-inner-loading :showing="showLoading" label-class="text-teal" label-style="font-size: 1.1em" />
     </q-list>
 </template>
 <script setup lang="ts">
-import { defineProps, withDefaults, Ref } from 'vue'
+import { withDefaults, Ref } from 'vue'
 import { Item } from 'src/composables/use-session-list'
 
 interface Props {
