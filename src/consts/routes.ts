@@ -1,23 +1,25 @@
 const RouteNames = {
     HOME: 'home',
-    SESSION: 'session',
-    GOTO: {
-        NEW: 'goto-new',
-        ID: 'goto-id',
+    SESSION: {
+        ROOT: 'session',
+        NEW: 'session-new',
+        ID: 'session-id',
     }
 }
 
 const RouteParams = {
-    GOTO: {
+    REDIRECT_TO: 'redirectTo',
+    SESSION: {
         ID: 'id'
     }
 }
 
 const RoutePath = {
     HOME: '/',
-    GOTO: {
+    SESSION: {
+        ROOT: '/session',
         NEW: `/session/new`,
-        ID: `/session/:${RouteParams.GOTO.ID}`
+        ID: `/session/:${RouteParams.SESSION.ID}`
     }
 }
 

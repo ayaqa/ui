@@ -4,35 +4,16 @@
     </q-card-section>
     <q-card-section>
         <div class="row q-py-md">
-            <q-btn
-                push
-                label="Create testing session"
-                color="primary"
-                class="col-12"
-                @click="$router.push({ name: RouteNames.GOTO.NEW })"
-            />
+            <q-btn push label="Create testing session" color="primary" class="col-12"
+                @click="$router.push({ name: RouteNames.SESSION.NEW })" />
         </div>
         <q-separator />
         <div class="row q-py-md">
-            <q-input
-                square
-                clearable
-                v-model="session"
-                type="text"
-                label="Session Identifier"
-                class="col-8 q-pr-sm"
-            >
+            <q-input square clearable v-model="session" type="text" label="Session Identifier" class="col-8 q-pr-sm">
                 <template v-slot:prepend></template>
             </q-input>
-            <q-btn
-                flat
-                push
-                label="Go"
-                color="primary"
-                class="col-4"
-                @click="gotoSession"
-                :disable="!hasValidSession"
-            />
+            <q-btn flat push label="Go" color="primary" class="col-4" @click="gotoSession"
+                :disable="!hasValidSession" />
         </div>
     </q-card-section>
 </template>
@@ -52,9 +33,9 @@ const hasValidSession = computed(() => { return session.value !== '' })
 
 const gotoSession = () => {
     router.push({
-        name: RouteNames.GOTO.ID,
+        name: RouteNames.SESSION.ID,
         params: {
-            [RouteParams.GOTO.ID]: session.value
+            [RouteParams.SESSION.ID]: session.value
         }
     })
 }

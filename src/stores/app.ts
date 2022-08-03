@@ -8,14 +8,18 @@ export const useAppStore = defineStore('app', {
             apiURL: import.meta.env.AYAQA_DEFAULT_API,
             sessionId: ''
         },
-        isSessionVerified: false,
+        sessionVerified: false,
     }),
     getters: {
-        hasSession: (state) => state.app.sessionId != ''
+        hasSession: (state) => state.app.sessionId != '',
+        isValidSession: (state) => state.sessionVerified,
     },
     actions: {
         setSession (sessionId: string) {
             this.app.sessionId = sessionId
+        },
+        setValidSession (verified: boolean) {
+            this.sessionVerified = verified;
         }
     },
     persist: {

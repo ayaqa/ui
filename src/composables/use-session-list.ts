@@ -1,29 +1,29 @@
 import { ref, Ref } from 'vue';
 import { i18n } from 'src/locales';
 
-export enum ItemState {
+export enum SessionCheckState {
     LOADING = 'loading',
     DONE = 'done',
     ERROR = 'error',
 }
 
-export type Item = {
+export type SessionCheckItem = {
     title: string,
     icon: string,
-    state: Ref<ItemState>
+    state: Ref<SessionCheckState>
 }
 
 export type usableSessionList = {
-    list: Array<Item>,
-    markSesssionCheck: (state: ItemState) => void,
-    markMigrateDB: (state: ItemState) => void,
-    markSeedDB: (state: ItemState) => void,
+    list: Array<SessionCheckItem>,
+    markSesssionCheck: (state: SessionCheckState) => void,
+    markMigrateDB: (state: SessionCheckState) => void,
+    markSeedDB: (state: SessionCheckState) => void,
 }
 
 export default function useSessionList (isNew: boolean): usableSessionList {
-    const sessionCheck = ref<ItemState>(ItemState.LOADING);
-    const migrateDB = ref<ItemState>(ItemState.LOADING);
-    const seedDB = ref<ItemState>(ItemState.LOADING);
+    const sessionCheck = ref<SessionCheckState>(SessionCheckState.LOADING);
+    const migrateDB = ref<SessionCheckState>(SessionCheckState.LOADING);
+    const seedDB = ref<SessionCheckState>(SessionCheckState.LOADING);
 
     const list = isNew ?
         [
@@ -39,15 +39,15 @@ export default function useSessionList (isNew: boolean): usableSessionList {
 
     return { list, markSesssionCheck, markMigrateDB, markSeedDB }
 
-    function markSesssionCheck (state: ItemState) {
+    function markSesssionCheck (state: SessionCheckState) {
         sessionCheck.value = state;
     }
 
-    function markMigrateDB (state: ItemState) {
+    function markMigrateDB (state: SessionCheckState) {
         migrateDB.value = state;
     }
 
-    function markSeedDB (state: ItemState) {
+    function markSeedDB (state: SessionCheckState) {
         seedDB.value = state;
     }
 

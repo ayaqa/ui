@@ -18,9 +18,9 @@ createSession()
     .then((response) => response.data)
     .then((json) => {
         router.push({
-            name: RouteNames.GOTO.ID,
+            name: RouteNames.SESSION.ID,
             params: {
-                [RouteParams.GOTO.ID]: json.session,
+                [RouteParams.SESSION.ID]: json.session,
             },
             query: {
                 newSession: 1
