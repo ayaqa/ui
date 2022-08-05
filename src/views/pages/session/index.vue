@@ -5,7 +5,7 @@
     <q-card-section>
         <div class="row q-py-md">
             <q-btn push :label="t('init.btn_create_session')" color="primary" class="col-12"
-                @click="$router.push({ name: RouteNames.SESSION.NEW })" />
+                @click="$router.push({ name: RouteNames.SESSION.NEW, query: route.query })" />
         </div>
         <q-separator />
         <div class="row q-py-md">
@@ -21,15 +21,16 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useAppStore } from 'src/stores/app';
+import { useAppStore } from 'src/stores/app'
 
 import { RouteNames, RouteParams } from 'src/consts/routes'
 
 const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
-const appStore = useAppStore();
+const route = useRoute()
+const appStore = useAppStore()
 
 const session = ref<string>(appStore.app.sessionId);
 const hasValidSession = computed(() => { return session.value !== '' })
@@ -39,7 +40,8 @@ const gotoSession = () => {
         name: RouteNames.SESSION.ID,
         params: {
             [RouteParams.SESSION.ID]: session.value
-        }
+        },
+        query: route.query
     })
 }
 </script>

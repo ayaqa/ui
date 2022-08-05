@@ -29,9 +29,9 @@ const { t } = useI18n({ useScope: 'global' })
 // in case it coming from new url then display different checklist
 const isNew = route.query?.newSession === '1' || false
 const { list, markSesssionCheck, markMigrateDB, markSeedDB } = useSessionList(isNew)
-const showBtn = ref(false);
+const showBtn = ref(false)
 
-let intervalId: number;
+let intervalId: number
 onMounted(() => {
     if (isNew) {
         markSesssionCheck(SessionCheckState.DONE)
@@ -96,7 +96,7 @@ const getSessionDetails = () => {
 
             showBtn.value = true
         })
-};
+}
 
 const handleNotReadyState = (state: SessionState) => {
     if (state !== SessionState.PROVISIONING_FAILED) {
@@ -126,7 +126,7 @@ const handleNotReadyState = (state: SessionState) => {
 
 const handleRemoveSession = () => {
     store.setSession('')
-    router.push({ name: RouteNames.SESSION.ROOT })
+    router.push({ name: RouteNames.SESSION.ROOT, query: route.query })
 }
 
 </script>
