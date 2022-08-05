@@ -2,9 +2,22 @@ home: 'Home'
 configure: 'Configure'
 init:
   create_session: 'Creating new session'
-  migrate_db: 'Running database migrations'
-  seed_db: 'Seeding database'
+  migrate_db: 'Preparing database'
+  seed_db: 'Preparing data'
 
-  session_check: 'Sesssion check'
-  db_check: 'Database check'
+  session_check: 'Session check'
+  db_check: 'Database structure check'
   db_data_check: 'Database data check'
+
+  btn_remove_session: 'Remove Session and go back'
+  btn_create_session: 'Create testing session'
+  lbl_session_id: 'Session Identifier'
+
+init_errors:
+  provision_failed: 'Database structure migrating/data seeding is failing. Create new one or use different.'
+  deleting: 'Session is sheduled to be deleted. Create new one or use different.'
+  fetch_data: 'Cannot fetch session information: {code} -> `{error}`'
+
+btn:
+  close: 'Close'
+  go: 'Go'

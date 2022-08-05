@@ -78,16 +78,12 @@ router.beforeEach((to, from, next) => {
         },
         query: queryParams
       })
-
-      return;
+    } else {
+      next({ name: RouteNames.SESSION.ROOT, query: queryParams })
     }
-
-    next({ name: RouteNames.SESSION.ROOT, query: queryParams })
-
-    return;
+  } else {
+    next();
   }
-
-  next();
 })
 
 export default router

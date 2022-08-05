@@ -1,27 +1,35 @@
 <template>
-    <q-card-section>
-        <v-session-checklist :items="list" />
-    </q-card-section>
+    <q-card>
+        <q-card-section>
+            <v-session-checklist :items="list" show-loading=true />
+        </q-card-section>
+        <q-card-actions v-if="showBtn" vertical>
+            <q-btn @click="handleRemoveSession" color="red" flat>{{ t('init.btn_remove_session') }}</q-btn>
+        </q-card-actions>
+    </q-card>
 </template>
 <script setup lang="ts">
-
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Notify } from 'quasar'
 
 import useSessionList, { SessionCheckState } from 'src/composables/use-session-list'
 import { useAppStore } from 'src/stores'
+import { useI18n } from 'vue-i18n'
+
 import { RouteNames, RouteParams } from 'src/consts'
 import { getSessionInfo } from 'src/api/session'
 import { SessionState } from 'src/types/api/session'
 
-
-const route = useRoute()
 const router = useRouter()
+const route = useRoute()
 const store = useAppStore()
+const { t } = useI18n({ useScope: 'global' })
 
 // in case it coming from new url then display different checklist
-const isNew = route.query?.newSession === '1' || false;
-const { list, markSesssionCheck } = useSessionList(isNew)
+const isNew = route.query?.newSession === '1' || false
+const { list, markSesssionCheck, markMigrateDB, markSeedDB } = useSessionList(isNew)
+const showBtn = ref(false);
 
 let intervalId: number;
 onMounted(() => {
@@ -29,35 +37,96 @@ onMounted(() => {
         markSesssionCheck(SessionCheckState.DONE)
     }
 
-    intervalId = setInterval(validateSession, 2000)
+    intervalId = setInterval(getSessionDetails, 2000)
 })
 
 onUnmounted(() => {
-    clearInterval(intervalId);
+    clearInterval(intervalId)
 })
 
-const validateSession = () => {
+
+const getSessionDetails = () => {
     getSessionInfo(route.params.id as string)
         .then((response) => response.data)
         .then((json) => {
+
+            // clear interval if is ready
+            if (json.state !== SessionState.PROVISIONING) {
+                clearInterval(intervalId)
+            }
+
+            // handle different cases
             if (json.state !== SessionState.READY) {
-                // @TODO handle deleted and failed states
+
+                handleNotReadyState(json.state)
+
                 return;
             }
 
-            clearInterval(intervalId)
+            markSesssionCheck(SessionCheckState.DONE)
 
+            // success handle
             store.setSession(json.session)
             store.setValidSession(true)
 
-            const pathRedirect = (route.query?.[RouteParams.REDIRECT_TO]) as string || false;
+            const pathRedirect = (route.query?.[RouteParams.REDIRECT_TO]) as string || false
 
             if (pathRedirect !== false) {
                 router.push({ path: pathRedirect })
             } else {
                 router.push({ name: RouteNames.HOME })
             }
+        }).catch((json) => {
+            markSesssionCheck(SessionCheckState.ERROR)
+            clearInterval(intervalId)
+
+            Notify.create({
+                type: 'negative',
+                message: t('init_errors.fetch_data', {
+                    code: json.response.status,
+                    error: json.message
+                }),
+                position: 'top',
+                timeout: 50000,
+                progress: true,
+                actions: [
+                    { label: t('btn.close'), color: 'white', handler: () => { } }
+                ]
+            })
+
+            showBtn.value = true
         })
 };
+
+const handleNotReadyState = (state: SessionState) => {
+    if (state !== SessionState.PROVISIONING_FAILED) {
+        return;
+    }
+
+    markMigrateDB(SessionCheckState.ERROR)
+    markSeedDB(SessionCheckState.ERROR)
+
+    if (false === isNew) {
+        markSesssionCheck(SessionCheckState.ERROR)
+    }
+
+    Notify.create({
+        type: 'negative',
+        message: t('init_errors.provision_failed'),
+        position: 'top',
+        timeout: 50000,
+        progress: true,
+        actions: [
+            { label: t('btn.close'), color: 'white', handler: () => { } }
+        ]
+    })
+
+    showBtn.value = true
+}
+
+const handleRemoveSession = () => {
+    store.setSession('')
+    router.push({ name: RouteNames.SESSION.ROOT })
+}
 
 </script>

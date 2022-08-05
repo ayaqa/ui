@@ -1,4 +1,4 @@
-import { Quasar } from 'quasar'
+import { Quasar, Notify } from 'quasar'
 
 import 'quasar/src/css/index.sass'
 
@@ -7,7 +7,9 @@ import '@quasar/extras/material-icons/material-icons.css'
 const config = {
   lang: 'en',
   cssAddon: true,
-  plugins: {}, // Quasar plugins
+  plugins: {
+    Notify
+  },
   config: {
     brand: {
       primary: 'rgb(0,150,136)',
@@ -20,7 +22,8 @@ const config = {
       negative: '#C10015',
       info: '#31CCEC',
       warning: '#F2C037'
-    }
+    },
+    notify: {}
   }
 }
 

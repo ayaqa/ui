@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router';
 
 import { RouteNames, RouteParams } from 'src/consts'
 import { createSession } from 'src/api/session';
+
 import useSessionList from 'src/composables/use-session-list'
 
 const router = useRouter();

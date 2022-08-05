@@ -1,5 +1,5 @@
 import { ref, Ref } from 'vue';
-import { i18n } from 'src/locales';
+import { useI18n } from 'vue-i18n'
 
 export enum SessionCheckState {
     LOADING = 'loading',
@@ -24,17 +24,18 @@ export default function useSessionList (isNew: boolean): usableSessionList {
     const sessionCheck = ref<SessionCheckState>(SessionCheckState.LOADING);
     const migrateDB = ref<SessionCheckState>(SessionCheckState.LOADING);
     const seedDB = ref<SessionCheckState>(SessionCheckState.LOADING);
+    const { t } = useI18n({ useScope: 'global' })
 
     const list = isNew ?
         [
-            { title: i18n.global.t('init.create_session'), icon: 'fact_check', state: sessionCheck },
-            { title: i18n.global.t('init.migrate_db'), icon: 'storage', state: migrateDB },
-            { title: i18n.global.t('init.seed_db'), icon: 'storage', state: seedDB }
+            { title: t('init.create_session'), icon: 'fact_check', state: sessionCheck },
+            { title: t('init.migrate_db'), icon: 'storage', state: migrateDB },
+            { title: t('init.seed_db'), icon: 'sd_storage', state: seedDB }
         ] :
         [
-            { title: i18n.global.t('init.session_check'), icon: 'fact_check', state: sessionCheck },
-            { title: i18n.global.t('init.db_check'), icon: 'storage', state: migrateDB },
-            { title: i18n.global.t('init.db_data_check'), icon: 'storage', state: seedDB },
+            { title: t('init.session_check'), icon: 'fact_check', state: sessionCheck },
+            { title: t('init.db_check'), icon: 'storage', state: migrateDB },
+            { title: t('init.db_data_check'), icon: 'sd_storage', state: seedDB },
         ];
 
     return { list, markSesssionCheck, markMigrateDB, markSeedDB }
@@ -50,5 +51,4 @@ export default function useSessionList (isNew: boolean): usableSessionList {
     function markSeedDB (state: SessionCheckState) {
         seedDB.value = state;
     }
-
 }
