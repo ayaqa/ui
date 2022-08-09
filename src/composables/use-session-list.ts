@@ -21,10 +21,10 @@ export type usableSessionList = {
 }
 
 export default function useSessionList (isNew: boolean): usableSessionList {
-    const sessionCheck = ref<SessionCheckState>(SessionCheckState.LOADING);
-    const migrateDB = ref<SessionCheckState>(SessionCheckState.LOADING);
-    const seedDB = ref<SessionCheckState>(SessionCheckState.LOADING);
-    const { t } = useI18n({ useScope: 'global' })
+    const sessionCheck = ref<SessionCheckState>(SessionCheckState.LOADING)
+    const migrateDB = ref<SessionCheckState>(SessionCheckState.LOADING)
+    const seedDB = ref<SessionCheckState>(SessionCheckState.LOADING)
+    const { t } = useI18n()
 
     const list = isNew ?
         [
@@ -36,19 +36,19 @@ export default function useSessionList (isNew: boolean): usableSessionList {
             { title: t('init.session_check'), icon: 'fact_check', state: sessionCheck },
             { title: t('init.db_check'), icon: 'storage', state: migrateDB },
             { title: t('init.db_data_check'), icon: 'sd_storage', state: seedDB },
-        ];
+        ]
 
     return { list, markSesssionCheck, markMigrateDB, markSeedDB }
 
     function markSesssionCheck (state: SessionCheckState) {
-        sessionCheck.value = state;
+        sessionCheck.value = state
     }
 
     function markMigrateDB (state: SessionCheckState) {
-        migrateDB.value = state;
+        migrateDB.value = state
     }
 
     function markSeedDB (state: SessionCheckState) {
-        seedDB.value = state;
+        seedDB.value = state
     }
 }

@@ -1,25 +1,34 @@
 import { defineStore } from 'pinia'
 
 import { AppConsts } from 'src/consts'
+import config from 'src/config'
 
 export const useAppStore = defineStore('app', {
     state: () => ({
         app: {
-            apiURL: import.meta.env.AYAQA_DEFAULT_API,
-            sessionId: ''
+            apiURL: config.API_URL,
+            sessionId: '',
+            isSideMenuOpen: false
         },
         sessionVerified: false,
     }),
     getters: {
-        hasSession: (state) => state.app.sessionId != '',
-        isValidSession: (state) => state.sessionVerified,
+        hasSession (): boolean { return this.app.sessionId != '' },
+        isValidSession (): boolean { return this.sessionVerified },
     },
     actions: {
-        setSession (sessionId: string) {
+        loginSession (sessionId: string) {
             this.app.sessionId = sessionId
+            this.setVerifiedSession(true)
         },
-        setValidSession (verified: boolean) {
-            this.sessionVerified = verified;
+        logoutSession () {
+            this.app.sessionId = '';
+        },
+        setVerifiedSession (verified: boolean) {
+            this.sessionVerified = verified
+        },
+        toggleSideMenu () {
+            this.app.isSideMenuOpen = !this.app.isSideMenuOpen
         }
     },
     persist: {

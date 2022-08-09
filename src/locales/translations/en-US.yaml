@@ -1,5 +1,25 @@
 home: 'Home'
 configure: 'Configure'
+logout: 'Logout'
+
+btn:
+  close: 'Close'
+  go: 'Go'
+  configure: 'Configure'
+  bugs: 'Bugs'
+  support: 'Support'
+  go_back: 'Go back'
+
+tooltip:
+  navigation_toggle: Side navigation menu
+
+support_dropdown:
+  version: 'Version info'
+  report_bug: 'Report a bug'
+  ayaqa_web: 'AyaQA Web'
+  ayaqa_github: 'AyaQA Github'
+
+
 init:
   create_session: 'Creating new session'
   migrate_db: 'Preparing database'
@@ -16,8 +36,5 @@ init:
 init_errors:
   provision_failed: 'Database structure migrating/data seeding is failing. Create new one or use different.'
   deleting: 'Session is sheduled to be deleted. Create new one or use different.'
-  fetch_data: 'Cannot fetch session information: {code} -> `{error}`'
-
-btn:
-  close: 'Close'
-  go: 'Go'
+  fetch_data: 'Fetch session error: {error}'
+  create_session: 'Create session error: {error}'

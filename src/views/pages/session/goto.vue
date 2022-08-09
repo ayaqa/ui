@@ -24,7 +24,7 @@ import { SessionState } from 'src/types/api/session'
 const router = useRouter()
 const route = useRoute()
 const store = useAppStore()
-const { t } = useI18n({ useScope: 'global' })
+const { t } = useI18n()
 
 // in case it coming from new url then display different checklist
 const isNew = route.query?.newSession === '1' || false
@@ -66,8 +66,7 @@ const getSessionDetails = () => {
             markSesssionCheck(SessionCheckState.DONE)
 
             // success handle
-            store.setSession(json.session)
-            store.setValidSession(true)
+            store.loginSession(json.session)
 
             const pathRedirect = (route.query?.[RouteParams.REDIRECT_TO]) as string || false
 
@@ -125,7 +124,7 @@ const handleNotReadyState = (state: SessionState) => {
 }
 
 const handleRemoveSession = () => {
-    store.setSession('')
+    store.logoutSession()
     router.push({ name: RouteNames.SESSION.ROOT, query: route.query })
 }
 

@@ -4,6 +4,8 @@ const RouteNames = {
         ROOT: 'session',
         NEW: 'session-new',
         ID: 'session-id',
+        CONFIG: 'session-configure',
+        BUGS: 'session-bugs',
     }
 }
 
@@ -19,7 +21,8 @@ const RoutePath = {
     SESSION: {
         ROOT: '/session',
         NEW: `/session/new`,
-        ID: `/session/:${RouteParams.SESSION.ID}`
+        ID: `/session/:${RouteParams.SESSION.ID}`,
+        CONFIG: `/session/:${RouteParams.SESSION.ID}/config`
     }
 }
 
@@ -27,4 +30,4 @@ export {
     RouteNames,
     RoutePath,
     RouteParams,
-};
+}
