@@ -4,8 +4,11 @@ const RouteNames = {
         ROOT: 'session',
         NEW: 'session-new',
         ID: 'session-id',
-        CONFIG: 'session-configure',
+        CONFIGURE: 'session-configure',
         BUGS: 'session-bugs',
+    },
+    CHECKBOX: {
+        TOC: 'checkbox-toc'
     }
 }
 
@@ -22,7 +25,11 @@ const RoutePath = {
         ROOT: '/session',
         NEW: `/session/new`,
         ID: `/session/:${RouteParams.SESSION.ID}`,
-        CONFIG: `/session/:${RouteParams.SESSION.ID}/config`
+        CONFIG: `/session/config`,
+        BUGS: `/session/bugs`,
+    },
+    CHECKBOX: {
+        TOC: '/checkbox/toc'
     }
 }
 

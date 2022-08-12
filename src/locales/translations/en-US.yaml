@@ -19,6 +19,11 @@ support_dropdown:
   ayaqa_web: 'AyaQA Web'
   ayaqa_github: 'AyaQA Github'
 
+sidemenu:
+  home: 'Home'
+  components_header: 'Components'
+  checkboxes: 'Checkboxes'
+
 
 init:
   create_session: 'Creating new session'

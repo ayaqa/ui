@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import { RouteNames, RoutePath, RouteParams } from 'src/consts'
-import { useAppStore } from 'src/stores/app';
+import { useAppStore } from 'src/stores/app'
 
 import DefaultLayout from '~/views/layouts/default.vue'
 import AppLayout from '~/views/layouts/app.vue'
@@ -19,6 +19,30 @@ const routes: RouteRecordRaw[] = [
           title: 'app.index',
         },
       },
+      {
+        path: RoutePath.SESSION.CONFIG,
+        name: RouteNames.SESSION.CONFIGURE,
+        component: () => import('~/views/pages/app/configure.vue'),
+        meta: {
+          title: 'app.configure',
+        },
+      },
+      {
+        path: RoutePath.SESSION.BUGS,
+        name: RouteNames.SESSION.BUGS,
+        component: () => import('~/views/pages/app/bugs.vue'),
+        meta: {
+          title: 'app.bugs',
+        },
+      },
+      {
+        path: RoutePath.CHECKBOX.TOC,
+        name: RouteNames.CHECKBOX.TOC,
+        component: () => import('~/views/pages/app/components/checkbox/toc.vue'),
+        meta: {
+          title: 'app.checkbox.toc',
+        },
+      },
     ],
   },
   {
@@ -30,17 +54,15 @@ const routes: RouteRecordRaw[] = [
         name: RouteNames.SESSION.ROOT,
         component: () => import('~/views/pages/session/index.vue'),
         meta: {
-          title: 'session.index',
-          noSession: true,
-        },
+          title: 'session.index'
+        }
       },
       {
         path: RoutePath.SESSION.NEW,
         name: RouteNames.SESSION.NEW,
         component: () => import('~/views/pages/session/new.vue'),
         meta: {
-          title: 'session.new',
-          noSession: true,
+          title: 'session.new'
         },
       },
       {
@@ -48,13 +70,12 @@ const routes: RouteRecordRaw[] = [
         name: RouteNames.SESSION.ID,
         component: () => import('~/views/pages/session/goto.vue'),
         meta: {
-          title: 'session.id',
-          noSession: true,
+          title: 'session.id'
         },
       },
     ]
   },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
@@ -63,7 +84,7 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  const appStore = useAppStore();
+  const appStore = useAppStore()
 
   // @TODO handle requested url and keep it as redirect back
   if (false === appStore.isValidSession && false === to.path.startsWith('/session')) {
@@ -82,7 +103,7 @@ router.beforeEach((to, from, next) => {
       next({ name: RouteNames.SESSION.ROOT, query: queryParams })
     }
   } else {
-    next();
+    next()
   }
 })
 

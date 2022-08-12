@@ -1,9 +1,12 @@
 <template>
     <q-layout view="hHh LpR lFf">
         <nav-bar />
-        <router-view v-slot="{ Component }">
-            <component :is="Component" />
-        </router-view>
+        <left-nav-bar />
+        <q-page-container>
+            <router-view v-slot="{ Component }">
+                <component :is="Component" />
+            </router-view>
+        </q-page-container>
     </q-layout>
 </template>
 
@@ -11,12 +14,14 @@
 import { defineComponent } from 'vue'
 
 import NavBar from 'src/views/components/layout/NavBar.vue'
+import LeftNavBar from 'src/views/components/layout/LeftNavBar.vue'
 
 const appLayout = defineComponent({
     components: {
-        NavBar
+        NavBar,
+        LeftNavBar
     },
-    setup() {
+    setup () {
         return {}
     }
 })

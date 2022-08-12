@@ -15,9 +15,10 @@
             </q-toolbar-title>
             <q-tabs v-model="navBarActiveItem" inline-label :data-ayaqa="attr(AYAQA_ATTRS.topNav.bar)">
                 <q-route-tab icon="settings" name="configure" :label="t('btn.configure')"
-                    :data-ayaqa="attr(AYAQA_ATTRS.topNav.configureButton)" :to="RouteNames.SESSION.CONFIG" />
+                    :data-ayaqa="attr(AYAQA_ATTRS.topNav.configureButton)"
+                    :to="{ name: RouteNames.SESSION.CONFIGURE }" />
                 <q-route-tab icon="bug_report" name="bugs" :label="t('btn.bugs')"
-                    :data-ayaqa="attr(AYAQA_ATTRS.topNav.bugButton)" :to="RouteNames.SESSION.BUGS" />
+                    :data-ayaqa="attr(AYAQA_ATTRS.topNav.bugButton)" :to="{ name: RouteNames.SESSION.BUGS }" />
             </q-tabs>
             <q-space />
             <q-btn-dropdown stretch flat :label="t('btn.support')" :data-ayaqa="attr(AYAQA_ATTRS.topNav.supportButton)">

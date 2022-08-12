@@ -1,3 +1,3 @@
 <template>
-    index.vue
+    configure.vue
 </template>

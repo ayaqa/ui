@@ -13,6 +13,11 @@ const AYAQA_ATTRS = {
         ayaqaWeb: 'top-navbar-support-ayaqa-web',
         ayaqaGithub: 'top-navbar-support-ayaqa-web',
     },
+    sideNav: {
+        home: 'nav-home',
+        components: 'nav-dd-components',
+        checkboxes: 'nav-checkboxes',
+    }
 }
 
 export { AYAQA_ATTRS }
