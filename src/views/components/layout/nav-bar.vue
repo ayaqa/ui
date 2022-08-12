@@ -59,24 +59,24 @@ import { AYAQA_ATTRS, RouteNames } from 'src/consts'
 export default defineComponent({
     name: 'NavBar',
     setup () {
-        const { attr } = useDataAttribute();
+        const { attr } = useDataAttribute()
         const { t } = useI18n({ useScope: 'global' })
-        const { toggleSideMenu, logoutSession } = useAppStore();
-        const route = useRoute();
-        const router = useRouter();
-        const { menuListItems } = useSupportDropdownList();
+        const { toggleSideMenu, logoutSession } = useAppStore()
+        const route = useRoute()
+        const router = useRouter()
+        const { menuListItems } = useSupportDropdownList()
 
         const navBarActiveItem = ref(route.name)
         watch(() => route.name, (newName): void => {
-            navBarActiveItem.value = newName?.toString() || '';
+            navBarActiveItem.value = newName?.toString() || ''
         })
 
         const handleClickDropdown = (url: string) => {
-            window.open(url, '_blank');
+            window.open(url, '_blank')
         }
 
         const handleLogout = () => {
-            logoutSession();
+            logoutSession()
             router.push({ name: RouteNames.SESSION.ROOT, query: route.query })
         }
 

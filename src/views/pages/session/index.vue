@@ -32,7 +32,7 @@ const router = useRouter()
 const route = useRoute()
 const appStore = useAppStore()
 
-const session = ref<string>(appStore.app.sessionId);
+const session = ref<string>(appStore.app.sessionId)
 const hasValidSession = computed(() => { return session.value !== '' })
 
 const gotoSession = () => {

@@ -60,7 +60,7 @@ const getSessionDetails = () => {
 
                 handleNotReadyState(json.state)
 
-                return;
+                return
             }
 
             markSesssionCheck(SessionCheckState.DONE)
@@ -99,7 +99,7 @@ const getSessionDetails = () => {
 
 const handleNotReadyState = (state: SessionState) => {
     if (state !== SessionState.PROVISIONING_FAILED) {
-        return;
+        return
     }
 
     markMigrateDB(SessionCheckState.ERROR)

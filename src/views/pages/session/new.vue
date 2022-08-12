@@ -12,7 +12,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 import { RouteNames, RouteParams } from 'src/consts'
-import { createSession } from 'src/api/session';
+import { createSession } from 'src/api/session'
 
 import useSessionList from 'src/composables/use-session-list'
 import { useI18n } from 'vue-i18n'
@@ -20,7 +20,7 @@ import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const route = useRoute()
 const { list } = useSessionList(true)
-const { t } = useI18n();
+const { t } = useI18n()
 
 const showBtn = ref(false)
 

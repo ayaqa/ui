@@ -1,5 +1,5 @@
 <template>
-    <q-drawer v-model="store.app.isSideMenuOpen" side="left" :width=250 show-if-above bordered>
+    <q-drawer v-model="store.app.isSideMenuOpen" side="left" :width=config.APP.sideMenuWidth show-if-above bordered>
         <q-scroll-area class="fit">
             <q-list :data-ayaqa="attr(AYAQA_ATTRS.sideNav.container)">
                 <template v-for="(item, idx) in NAV_BAR_LIST" :key="idx">
@@ -31,9 +31,10 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from "vue-router"
 
 import { useAppStore } from 'src/stores'
-import { AYAQA_ATTRS } from 'src/consts'
+import { AYAQA_ATTRS, RouteNames } from 'src/consts'
 import { NAV_BAR_LIST, SideNavItem } from 'src/consts/menu'
 import useDataAttribute from 'src/composables/use-data-attribute'
+import config from 'src/config'
 
 import LeftNavBarItem from 'src/views/components/layout/partial/left-nav-bar-item.vue'
 
@@ -44,11 +45,16 @@ const { attr } = useDataAttribute()
 
 const activeRouterName = ref(getRouteName())
 watch(() => route.name, (): void => {
-    activeRouterName.value = getRouteName();
+    activeRouterName.value = getRouteName()
 })
 
 onBeforeMount(() => {
-    findActiveMenuAndMarkAsOpened(NAV_BAR_LIST)
+    const found = findActiveMenuAndMarkAsOpened(NAV_BAR_LIST)
+
+    // dirty hack to open Components if Home is selected
+    if (getRouteName() === RouteNames.HOME || !found) {
+        NAV_BAR_LIST[1].opened = true
+    }
 })
 
 function getRouteName (): string {
@@ -56,7 +62,7 @@ function getRouteName (): string {
 }
 
 function findActiveMenuAndMarkAsOpened (navBarList: Array<SideNavItem>): boolean {
-    const routeName = getRouteName();
+    const routeName = getRouteName()
 
     let foundRoute = false
     navBarList.forEach((item) => {
@@ -71,7 +77,7 @@ function findActiveMenuAndMarkAsOpened (navBarList: Array<SideNavItem>): boolean
 
             foundRoute = true
 
-            return;
+            return
         }
     })
 
