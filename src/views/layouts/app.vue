@@ -13,8 +13,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import NavBar from 'src/views/components/layout/NavBar.vue'
-import LeftNavBar from 'src/views/components/layout/LeftNavBar.vue'
+import NavBar from 'src/views/components/layout/nav-bar.vue'
+import LeftNavBar from 'src/views/components/layout/left-nav-bar.vue'
 
 const appLayout = defineComponent({
     components: {

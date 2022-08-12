@@ -66,7 +66,7 @@ export default defineComponent({
         const router = useRouter();
         const { menuListItems } = useSupportDropdownList();
 
-        const navBarActiveItem = ref('')
+        const navBarActiveItem = ref(route.name)
         watch(() => route.name, (newName): void => {
             navBarActiveItem.value = newName?.toString() || '';
         })

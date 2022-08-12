@@ -14,9 +14,11 @@ const AYAQA_ATTRS = {
         ayaqaGithub: 'top-navbar-support-ayaqa-web',
     },
     sideNav: {
+        container: 'nav-side-container',
         home: 'nav-home',
         components: 'nav-dd-components',
         checkboxes: 'nav-checkboxes',
+        checkboxToc: 'nav-checkbox-toc',
     }
 }
 

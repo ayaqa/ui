@@ -19,9 +19,10 @@ export interface SideNavItem {
     title: string,
     icon: string,
     ayaqa: string,
-    addSeparatorAfter?: boolean
     route?: string,
     children?: SideNavItem[]
+    addSeparatorAfter?: boolean
+    opened?: boolean
 }
 
 export const SUPPORT_DROPDOWN_LIST: Array<SupportDropDownItem> = [
@@ -36,7 +37,12 @@ export const NAV_BAR_LIST: Array<SideNavItem> = [
     {
         type: SideNavItemType.HEADER, title: 'sidemenu.components_header', icon: 'toggle_on', ayaqa: AYAQA_ATTRS.sideNav.components,
         children: [
-            { type: SideNavItemType.ITEM, title: 'sidemenu.checkboxes', icon: 'check_box', ayaqa: AYAQA_ATTRS.sideNav.checkboxes, route: RouteNames.CHECKBOX.TOC },
+            {
+                type: SideNavItemType.HEADER, title: 'sidemenu.checkboxes', icon: 'check_box', ayaqa: AYAQA_ATTRS.sideNav.checkboxes,
+                children: [
+                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.toc', icon: 'gavel', ayaqa: AYAQA_ATTRS.sideNav.checkboxToc, route: RouteNames.CHECKBOX.TOC }
+                ]
+            },
         ]
     },
 ]

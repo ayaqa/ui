@@ -23,6 +23,8 @@ sidemenu:
   home: 'Home'
   components_header: 'Components'
   checkboxes: 'Checkboxes'
+  checkbox:
+    toc: 'Terms and Conditions'
 
 
 init:
