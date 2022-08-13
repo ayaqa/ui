@@ -10,6 +10,7 @@ export default {
 
 
     APP: {
-        sideMenuWidth: 250
+        leftNavBarWidth: 250,
+        rightSidebarWidth: 200
     }
 }

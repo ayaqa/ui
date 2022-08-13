@@ -2,6 +2,10 @@ home: 'Home'
 configure: 'Configure'
 logout: 'Logout'
 
+common:
+  do_not_test: 'Not testable'
+  v: 'v'
+
 btn:
   close: 'Close'
   go: 'Go'

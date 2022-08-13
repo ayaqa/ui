@@ -8,12 +8,13 @@ export const useAppStore = defineStore('app', {
         app: {
             apiURL: config.API_URL,
             sessionId: '',
-            isSideMenuOpen: false
+            isSideMenuOpened: false,
+            isRightSidebarOpened: true
         },
         sessionVerified: false,
     }),
     getters: {
-        hasSession (): boolean { return this.app.sessionId != '' },
+        hasSession (): boolean { return this.app.sessionId !== '' },
         isValidSession (): boolean { return this.sessionVerified },
     },
     actions: {
@@ -22,13 +23,13 @@ export const useAppStore = defineStore('app', {
             this.setVerifiedSession(true)
         },
         logoutSession () {
-            this.app.sessionId = '';
+            this.app.sessionId = ''
         },
         setVerifiedSession (verified: boolean) {
             this.sessionVerified = verified
         },
         toggleSideMenu () {
-            this.app.isSideMenuOpen = !this.app.isSideMenuOpen
+            this.app.isSideMenuOpened = !this.app.isSideMenuOpened
         }
     },
     persist: {

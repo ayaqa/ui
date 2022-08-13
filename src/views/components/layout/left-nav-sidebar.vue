@@ -1,5 +1,5 @@
 <template>
-    <q-drawer v-model="store.app.isSideMenuOpen" side="left" :width=config.APP.sideMenuWidth show-if-above bordered>
+    <q-drawer v-model="store.app.isSideMenuOpened" side="left" :width=config.APP.leftNavBarWidth show-if-above bordered>
         <q-scroll-area class="fit">
             <q-list :data-ayaqa="attr(AYAQA_ATTRS.sideNav.container)">
                 <template v-for="(item, idx) in NAV_BAR_LIST" :key="idx">

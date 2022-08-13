@@ -1,12 +1,12 @@
 <template>
     <q-header reveal class="bg-primary text-white">
         <q-toolbar>
-            <q-btn dense flat round icon="menu" @click="toggleSideMenu"
+            <!-- <q-btn dense flat round icon="menu" @click="toggleSideMenu"
                 :data-ayaqa="attr(AYAQA_ATTRS.topNav.sideMenuButton)">
                 <q-tooltip>
                     {{ t('tooltip.navigation_toggle') }}
                 </q-tooltip>
-            </q-btn>
+            </q-btn> -->
             <q-toolbar-title shrink>
                 <q-avatar>
                     <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
@@ -66,7 +66,7 @@ export default defineComponent({
         const router = useRouter()
         const { menuListItems } = useSupportDropdownList()
 
-        const navBarActiveItem = ref(route.name)
+        const navBarActiveItem = ref(route.name?.toString() || '')
         watch(() => route.name, (newName): void => {
             navBarActiveItem.value = newName?.toString() || ''
         })
