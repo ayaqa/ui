@@ -18,8 +18,11 @@ btn:
 
 tooltip:
   navigation_toggle: Side navigation menu
-  automatons_examples: Automation Examples
+
+card:
+  automatons: Automations
   test_cases: Test Cases
+  api_docs: API Docs
 
 support_dropdown:
   version: Version info
@@ -33,7 +36,6 @@ sidemenu:
   checkboxes: Checkboxes
   checkbox:
     toc: Terms and Conditions
-
 
 init:
   create_session: Creating new session
@@ -53,3 +55,7 @@ init_errors:
   deleting: Session is sheduled to be deleted. Create new one or use different.
   fetch_data: 'Fetch session error: {error}'
   create_session: 'Create session error: {error}'
+
+toc:
+  title: Terms and conditions
+  label: Do you agree with the terms & conditions?

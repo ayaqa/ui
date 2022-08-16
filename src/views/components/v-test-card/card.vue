@@ -3,7 +3,7 @@
         <q-toolbar>
             <q-toolbar-title>{{ computedTitle }}</q-toolbar-title>
             <q-space />
-            <q-btn flat round icon="more_vert" size="sm">
+            <q-btn flat round icon="more_vert" size="md">
                 <q-menu fit>
                     <q-list>
                         <q-item v-if="!hideCases" clickable v-close-popup>
@@ -11,21 +11,21 @@
                                 <q-icon name="description" />
                                 <q-badge color="green" floating class="q-mr-lg">{{ cases }}</q-badge>
                             </q-item-section>
-                            <q-item-section>Test Cases</q-item-section>
+                            <q-item-section>{{ t('card.test_cases') }}</q-item-section>
                         </q-item>
                         <q-item v-if="!hideAutomations" clickable v-close-popup>
                             <q-item-section avatar class="relative-position">
                                 <q-icon name="code" />
                                 <q-badge color="green" floating class="q-mr-lg">{{ automations }}</q-badge>
                             </q-item-section>
-                            <q-item-section>Automations</q-item-section>
+                            <q-item-section>{{ t('card.automatons') }}</q-item-section>
                         </q-item>
                         <q-separator />
                         <q-item clickable v-close-popup>
                             <q-item-section avatar>
                                 <q-icon name="integration_instructions" />
                             </q-item-section>
-                            <q-item-section>API Docs</q-item-section>
+                            <q-item-section>{{ t('card.api_docs') }}</q-item-section>
                         </q-item>
                     </q-list>
                 </q-menu>
@@ -36,7 +36,8 @@
             <slot></slot>
         </q-card-section>
         <q-card-actions>
-            <q-btn flat color="primary" :label="t(btnText)" :data-ayaqa="attr(`${AYAQA_ATTRS.testCard.save}-${id}`)" />
+            <q-btn flat color="primary" :label="t(btnText)" :data-ayaqa="attr(`${AYAQA_ATTRS.testCard.save}-${id}`)"
+                @click="save" />
             <q-space />
             <q-btn flat size="sm" :color="btnColor" @click="copyIdToClipboard">
                 <q-tooltip>
@@ -62,6 +63,8 @@ const props = defineProps({
     btnText: { type: String, default: () => 'btn.save' }
 })
 
+const emit = defineEmits(['onSave'])
+
 const metaStore = useMetaStore()
 const { attr } = useDataAttribute()
 const { t } = useI18n()
@@ -79,6 +82,10 @@ function copyIdToClipboard () {
 
         setTimeout(() => { btnColor.value = '' }, 500)
     })
+}
+
+function save () {
+    emit('onSave')
 }
 
 </script>
