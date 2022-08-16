@@ -52,9 +52,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import { useAppStore } from 'src/stores'
-import useDataAttribute from 'src/composables/use-data-attribute'
+import useDataAttribute, { AYAQA_ATTRS } from 'src/composables/use-data-attribute'
 import useSupportDropdownList from 'src/composables/use-support-dropdown-list'
-import { AYAQA_ATTRS, RouteNames } from 'src/consts'
+import { RouteNames } from 'src/consts'
 
 export default defineComponent({
     name: 'NavBar',

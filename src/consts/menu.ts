@@ -1,5 +1,6 @@
-import { URLS, AYAQA_ATTRS, RouteNames } from 'src/consts'
+import { URLS, RouteNames, UI_SECTIONS } from 'src/consts'
 import config from 'src/config'
+import { AYAQA_ATTRS } from 'src/composables/use-data-attribute'
 
 export interface SupportDropDownItem {
     icon: string,
@@ -40,7 +41,7 @@ export const NAV_BAR_LIST: Array<SideNavItem> = [
             {
                 type: SideNavItemType.HEADER, title: 'sidemenu.checkboxes', icon: 'check_box', ayaqa: AYAQA_ATTRS.sideNav.checkboxes,
                 children: [
-                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.toc', icon: 'gavel', ayaqa: AYAQA_ATTRS.sideNav.checkboxToc, route: RouteNames.CHECKBOX.TOC }
+                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.toc', icon: 'gavel', ayaqa: AYAQA_ATTRS.sideNav.item + UI_SECTIONS.CHECKBOX_1, route: RouteNames.CHECKBOX.TOC }
                 ]
             },
         ]

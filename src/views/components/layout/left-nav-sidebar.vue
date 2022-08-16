@@ -31,9 +31,9 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from "vue-router"
 
 import { useAppStore } from 'src/stores'
-import { AYAQA_ATTRS, RouteNames } from 'src/consts'
+import { RouteNames } from 'src/consts'
 import { NAV_BAR_LIST, SideNavItem } from 'src/consts/menu'
-import useDataAttribute from 'src/composables/use-data-attribute'
+import useDataAttribute, { AYAQA_ATTRS } from 'src/composables/use-data-attribute'
 import config from 'src/config'
 
 import LeftNavBarItem from 'src/views/components/layout/partial/left-nav-bar-item.vue'

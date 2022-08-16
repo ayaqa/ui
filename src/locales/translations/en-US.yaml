@@ -1,51 +1,55 @@
-home: 'Home'
-configure: 'Configure'
-logout: 'Logout'
+home: Home
+configure: Configure
+logout: Logout
 
 common:
-  do_not_test: 'Not testable'
-  v: 'v'
+  do_not_test: Not testable
+  v: v
 
 btn:
-  close: 'Close'
-  go: 'Go'
-  configure: 'Configure'
-  bugs: 'Bugs'
-  support: 'Support'
-  go_back: 'Go back'
+  save: Save
+  close: Close
+  go: Go
+  configure: Configure
+  bugs: Bugs
+  support: Support
+  go_back: Go back
+  copy_to_clipboard: Copy Text Clipboard
 
 tooltip:
   navigation_toggle: Side navigation menu
+  automatons_examples: Automation Examples
+  test_cases: Test Cases
 
 support_dropdown:
-  version: 'Version info'
-  report_bug: 'Report a bug'
-  ayaqa_web: 'AyaQA Web'
-  ayaqa_github: 'AyaQA Github'
+  version: Version info
+  report_bug: Report a bug
+  ayaqa_web: AyaQA Web
+  ayaqa_github: AyaQA Github
 
 sidemenu:
-  home: 'Home'
-  components_header: 'Components'
-  checkboxes: 'Checkboxes'
+  home: Home
+  components_header: Components
+  checkboxes: Checkboxes
   checkbox:
-    toc: 'Terms and Conditions'
+    toc: Terms and Conditions
 
 
 init:
-  create_session: 'Creating new session'
-  migrate_db: 'Preparing database'
-  seed_db: 'Preparing data'
+  create_session: Creating new session
+  migrate_db: Preparing database
+  seed_db: Preparing data
 
-  session_check: 'Session check'
-  db_check: 'Database structure check'
-  db_data_check: 'Database data check'
+  session_check: Session check
+  db_check: Database structure check
+  db_data_check: Database data check
 
-  btn_remove_session: 'Remove Session and go back'
-  btn_create_session: 'Create testing session'
-  lbl_session_id: 'Session Identifier'
+  btn_remove_session: Remove Session and go back
+  btn_create_session: Create testing session
+  lbl_session_id: Session Identifier
 
 init_errors:
-  provision_failed: 'Database structure migrating/data seeding is failing. Create new one or use different.'
-  deleting: 'Session is sheduled to be deleted. Create new one or use different.'
+  provision_failed: Database structure migrating/data seeding is failing. Create new one or use different.
+  deleting: Session is sheduled to be deleted. Create new one or use different.
   fetch_data: 'Fetch session error: {error}'
   create_session: 'Create session error: {error}'

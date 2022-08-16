@@ -32,6 +32,5 @@ const appLayout = defineComponent({
     }
 })
 
-
 export default appLayout
 </script>
