@@ -46,6 +46,7 @@
                 <span class="text-caption text-uppercase text-grey-5">{{ id }}</span>
             </q-btn>
         </q-card-actions>
+        <q-inner-loading :showing="loading" />
     </q-card>
 </template>
 <script setup lang="ts">
@@ -60,7 +61,8 @@ const props = defineProps({
     title: { type: String, required: false },
     hideCases: { type: Boolean, default: () => false },
     hideAutomations: { type: Boolean, default: () => false },
-    btnText: { type: String, default: () => 'btn.save' }
+    btnText: { type: String, default: () => 'btn.save' },
+    loading: { type: Boolean, default: () => false }
 })
 
 const emit = defineEmits(['onSave'])

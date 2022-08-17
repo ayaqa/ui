@@ -43,6 +43,22 @@ const routes: RouteRecordRaw[] = [
           title: 'app.checkbox.toc',
         },
       },
+      {
+        path: RoutePath.CHECKBOX.TECHNOLOGIES,
+        name: RouteNames.CHECKBOX.TECHNOLOGIES,
+        component: () => import('~/views/pages/app/components/checkbox/technologies.vue'),
+        meta: {
+          title: 'app.checkbox.technologies',
+        },
+      },
+      {
+        path: RoutePath.CHECKBOX.REMINDERS,
+        name: RouteNames.CHECKBOX.REMINDERS,
+        component: () => import('~/views/pages/app/components/checkbox/reminders.vue'),
+        meta: {
+          title: 'app.checkbox.reminders',
+        },
+      },
     ],
   },
   {

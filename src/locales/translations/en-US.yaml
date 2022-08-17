@@ -36,6 +36,8 @@ sidemenu:
   checkboxes: Checkboxes
   checkbox:
     toc: Terms and Conditions
+    technologies: Technologies
+    reminders: Reminders
 
 init:
   create_session: Creating new session
@@ -59,3 +61,17 @@ init_errors:
 toc:
   title: Terms and conditions
   label: Do you agree with the terms & conditions?
+
+technologies:
+  title: Technologies
+  2g: 2G
+  3g: 3G
+  4g: 4G
+  5g: 5G
+
+reminders:
+  title: Reminder Settings
+  label: Remind about appointment
+  viaEmail: 'via Email'
+  viaSMS: 'via SMS'
+  viaAPP: 'via App'

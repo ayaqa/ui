@@ -41,7 +41,9 @@ export const NAV_BAR_LIST: Array<SideNavItem> = [
             {
                 type: SideNavItemType.HEADER, title: 'sidemenu.checkboxes', icon: 'check_box', ayaqa: AYAQA_ATTRS.sideNav.checkboxes,
                 children: [
-                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.toc', icon: 'gavel', ayaqa: AYAQA_ATTRS.sideNav.item + UI_SECTIONS.CHECKBOX_1, route: RouteNames.CHECKBOX.TOC }
+                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.toc', icon: 'handshake', ayaqa: AYAQA_ATTRS.sideNav.item + UI_SECTIONS.CHECKBOX_1, route: RouteNames.CHECKBOX.TOC },
+                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.technologies', icon: '5g', ayaqa: AYAQA_ATTRS.sideNav.item + UI_SECTIONS.CHECKBOX_2, route: RouteNames.CHECKBOX.TECHNOLOGIES },
+                    { type: SideNavItemType.ITEM, title: 'sidemenu.checkbox.reminders', icon: 'notifications_active', ayaqa: AYAQA_ATTRS.sideNav.item + UI_SECTIONS.CHECKBOX_3, route: RouteNames.CHECKBOX.REMINDERS }
                 ]
             },
         ]

@@ -8,7 +8,9 @@ const RouteNames = {
         BUGS: 'session-bugs',
     },
     CHECKBOX: {
-        TOC: 'checkbox-toc'
+        TOC: 'checkbox-toc',
+        TECHNOLOGIES: 'checkbox-technologies',
+        REMINDERS: 'checkbox-reminders',
     }
 }
 
@@ -29,7 +31,9 @@ const RoutePath = {
         BUGS: `/session/bugs`,
     },
     CHECKBOX: {
-        TOC: '/checkbox/toc'
+        TOC: '/checkbox/toc',
+        TECHNOLOGIES: '/checkbox/technologies',
+        REMINDERS: '/checkbox/reminders'
     }
 }
 
