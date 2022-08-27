@@ -19,7 +19,7 @@ import { useI18n } from 'vue-i18n'
 
 import { RouteNames, RouteParams } from 'src/consts'
 import { getSessionInfo } from 'src/api/session'
-import { SessionState } from 'src/types/api/session'
+import { SESSION_STATE } from 'src/consts'
 
 const router = useRouter()
 const route = useRoute()
@@ -51,12 +51,12 @@ const getSessionDetails = () => {
         .then((json) => {
 
             // clear interval if is ready
-            if (json.state !== SessionState.PROVISIONING) {
+            if (json.state !== SESSION_STATE.PROVISIONING) {
                 clearInterval(intervalId)
             }
 
             // handle different cases
-            if (json.state !== SessionState.READY) {
+            if (json.state !== SESSION_STATE.READY) {
 
                 handleNotReadyState(json.state)
 
@@ -97,8 +97,8 @@ const getSessionDetails = () => {
         })
 }
 
-const handleNotReadyState = (state: SessionState) => {
-    if (state !== SessionState.PROVISIONING_FAILED) {
+const handleNotReadyState = (state: SESSION_STATE) => {
+    if (state !== SESSION_STATE.PROVISIONING_FAILED) {
         return
     }
 

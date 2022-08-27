@@ -14,7 +14,7 @@ import type { Ref } from 'vue'
 import { UI_SECTIONS } from 'src/consts'
 import { useI18n } from 'vue-i18n'
 import { fetchReminders, storeReminders } from 'src/api/checkbox'
-import { REMINDERS_RESPONSE, REMINDERS_CHANNELS } from 'src/types/api/checkbox'
+import { ReminderResponseInterface, ReminderChannelsInterface } from 'src/types/api/checkbox'
 
 const { t } = useI18n()
 const reminders = ref(false)
@@ -28,9 +28,9 @@ fetchReminders().then((response) => {
 function onSave () {
     loading.value = true
 
-    let requestData: REMINDERS_CHANNELS = {}
+    let requestData: ReminderChannelsInterface = {}
     channels.value.forEach((key) => {
-        requestData[key as keyof REMINDERS_CHANNELS] = true
+        requestData[key as keyof ReminderChannelsInterface] = true
     })
 
     storeReminders({
@@ -41,13 +41,13 @@ function onSave () {
     })
 }
 
-function handleResponse (data: REMINDERS_RESPONSE) {
+function handleResponse (data: ReminderResponseInterface) {
     loading.value = false
     reminders.value = data.reminders
 
     let tmp: string[] = []
     Object.keys(data.channels).forEach((key) => {
-        if (data.channels[key as keyof REMINDERS_CHANNELS] === true) {
+        if (data.channels[key as keyof ReminderChannelsInterface] === true) {
             tmp.push(key)
         }
     })

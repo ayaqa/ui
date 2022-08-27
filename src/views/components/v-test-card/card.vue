@@ -53,7 +53,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import useDataAttribute, { AYAQA_ATTRS } from 'src/composables/use-data-attribute'
-import { useMetaStore } from 'src/stores'
+import { useSessionStore } from 'src/stores'
 import { copyToClipboard } from 'quasar'
 
 const props = defineProps({
@@ -67,12 +67,12 @@ const props = defineProps({
 
 const emit = defineEmits(['onSave'])
 
-const metaStore = useMetaStore()
+const sessionStore = useSessionStore()
 const { attr } = useDataAttribute()
 const { t } = useI18n()
 
-const cases = computed(() => metaStore.getCases(props.id))
-const automations = computed(() => metaStore.getAutomations(props.id))
+const cases = computed(() => sessionStore.getCases(props.id))
+const automations = computed(() => sessionStore.getAutomations(props.id))
 const computedTitle = computed(() => props.title ? props.title : props.id)
 const btnColor = ref('')
 

@@ -20,16 +20,16 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: RoutePath.SESSION.CONFIG,
-        name: RouteNames.SESSION.CONFIGURE,
+        path: RoutePath.CONFIG,
+        name: RouteNames.CONFIGURE,
         component: () => import('~/views/pages/app/configure.vue'),
         meta: {
           title: 'app.configure',
         },
       },
       {
-        path: RoutePath.SESSION.BUGS,
-        name: RouteNames.SESSION.BUGS,
+        path: RoutePath.BUGS,
+        name: RouteNames.BUGS,
         component: () => import('~/views/pages/app/bugs.vue'),
         meta: {
           title: 'app.bugs',

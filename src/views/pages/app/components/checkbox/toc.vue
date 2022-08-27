@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import { UI_SECTIONS } from 'src/consts'
 import { useI18n } from 'vue-i18n'
 import { fetchTOC, storeTOC } from 'src/api/checkbox'
-import { TOC_RESPONSE } from 'src/types/api'
+import { TocReponseInterface } from 'src/types/api'
 
 const { t } = useI18n()
 const state = ref(false)
@@ -31,7 +31,7 @@ function onSave () {
     })
 }
 
-function handleResponse (data: TOC_RESPONSE) {
+function handleResponse (data: TocReponseInterface) {
     state.value = data.accepted || false
     loading.value = false
 }

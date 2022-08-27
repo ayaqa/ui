@@ -1,5 +1,7 @@
 
-export interface SESSION_CREATE_RESPONSE {
+import { SESSION_STATE } from 'src/consts'
+
+export interface CreateSessionResponseInterface {
     database: string,
     session: string,
     state: string,
@@ -8,17 +10,9 @@ export interface SESSION_CREATE_RESPONSE {
     id: number,
 }
 
-export enum SessionState {
-    CREATED = 'created',
-    PROVISIONING = 'provisioning',
-    PROVISIONING_FAILED = 'failed',
-    DELETING = 'deleting',
-    READY = 'ready'
-}
-
-export interface SESSION_INFO_RESPONSE {
+export interface InfoSessionResponseInterface {
     id: number,
     session: string,
-    state: SessionState,
+    state: SESSION_STATE,
     deletable: boolean,
 }

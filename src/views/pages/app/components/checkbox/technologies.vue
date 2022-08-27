@@ -14,7 +14,7 @@ import type { Ref } from 'vue'
 import { UI_SECTIONS } from 'src/consts'
 import { useI18n } from 'vue-i18n'
 import { fetchTechnologies, storeTechnologies } from 'src/api/checkbox'
-import { TECHNOLOGIES_RESPONSE, TECHNOLOGIES_RADIOS } from 'src/types/api'
+import { TechnologiesResponseInterface, TechnologiesRadiosInterface } from 'src/types/api'
 
 const { t } = useI18n()
 const multi: Ref<string[]> = ref([])
@@ -28,9 +28,9 @@ fetchTechnologies().then((result) => {
 function onSave () {
     loading.value = true
 
-    let requestData: TECHNOLOGIES_RADIOS = {}
+    let requestData: TechnologiesRadiosInterface = {}
     multi.value.forEach((key) => {
-        requestData[key as keyof TECHNOLOGIES_RADIOS] = true
+        requestData[key as keyof TechnologiesRadiosInterface] = true
     })
 
     storeTechnologies(requestData).then((result) => {
@@ -38,12 +38,12 @@ function onSave () {
     })
 }
 
-function handleResponse (data: TECHNOLOGIES_RESPONSE) {
+function handleResponse (data: TechnologiesResponseInterface) {
     loading.value = false
 
     let radios: string[] = []
     Object.keys(data.radio).forEach((key) => {
-        if (data.radio[key as keyof TECHNOLOGIES_RADIOS] === true) {
+        if (data.radio[key as keyof TechnologiesRadiosInterface] === true) {
             radios.push(key)
         }
     })

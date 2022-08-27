@@ -1,36 +1,40 @@
-export interface TOC_RESPONSE {
+// toc
+export interface TocReponseInterface {
     id: string,
     accepted: boolean,
 }
 
-export interface UPDATE_TOC_REQUEST {
+export interface UpdateTocRequestInterface {
     accepted: boolean,
 }
 
-export interface TECHNOLOGIES_RADIOS {
+// technologies
+export interface TechnologiesRadiosInterface {
     '2g'?: boolean,
     '3g'?: boolean,
     '4g'?: boolean,
     '5g'?: boolean,
 }
 
-export interface TECHNOLOGIES_RESPONSE {
+export interface TechnologiesResponseInterface {
     id: string,
-    radio: TECHNOLOGIES_RADIOS,
+    radio: TechnologiesRadiosInterface,
 }
 
-export interface REMINDERS_CHANNELS {
+
+// reminders
+export interface ReminderChannelsInterface {
     email?: boolean,
     sms?: boolean,
     app?: boolean,
 }
 
-export interface REMINDERS_RESPONSE {
+export interface ReminderResponseInterface {
     id: string,
     reminders: boolean,
-    channels: REMINDERS_CHANNELS,
+    channels: ReminderChannelsInterface,
 }
 
-export interface UPDATE_REMINDERS_REQUEST extends REMINDERS_CHANNELS {
+export interface UpdateReminderRequestInterface extends ReminderChannelsInterface {
     reminders: boolean,
 }

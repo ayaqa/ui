@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { AppConsts } from 'src/consts'
+import { APP } from 'src/consts'
 import config from 'src/config'
 
 export const useAppStore = defineStore('app', {
@@ -11,7 +11,7 @@ export const useAppStore = defineStore('app', {
             isSideMenuOpened: false,
             isRightSidebarOpened: true
         },
-        sessionVerified: false,
+        sessionVerified: false
     }),
     getters: {
         hasSession (): boolean { return this.app.sessionId !== '' },
@@ -33,7 +33,7 @@ export const useAppStore = defineStore('app', {
         }
     },
     persist: {
-        key: AppConsts.STORE.APP_STORE_PERSIST_KEY,
+        key: APP.STORE.APP_STORE_PERSIST_KEY,
         storage: window.localStorage,
         paths: ['app']
     }
