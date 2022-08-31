@@ -23,20 +23,16 @@
 </template>
 <script setup lang="ts">
 // @TODO - translation
-import { reactive } from 'vue'
+// @TODO - bug with deleting
+// @TODO - bug with undefined label
 import { storeToRefs } from 'pinia'
-
 import { useSessionStore } from 'src/stores'
-import {
-    BugManifestInterface
-} from 'src/types/api'
 
 import BugRow from 'src/views/components/bug/bug-row.vue'
 
 const sessionStore = useSessionStore()
-
-const storedBugs: Array<BugManifestInterface> = reactive(sessionStore.bugs)
-const { bugManifest } = storeToRefs(sessionStore)
+0
+const { bugManifest, bugs: storedBugs } = storeToRefs(sessionStore)
 const { addEmptyBug, removeBug, storeBugs, refreshManifestAndBugs } = sessionStore
 
 if (sessionStore.bugManifest === undefined) {

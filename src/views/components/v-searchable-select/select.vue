@@ -1,7 +1,8 @@
 <template>
     <q-select outlined filled stack-label v-model="selected" use-input input-debounce="0" :label="label"
         :options="options" @filter="filterFn" :style="width ? { width: `${width}px` } : {}" behavior="menu"
-        :emit-value="isObject" :map-options="isObject" :option-value="optionValue" :option-label="optionLabel">
+        :emit-value="isObject" :map-options="isObject" :option-value="optionValue" :option-label="optionLabel"
+        :data-ayaqa="`${ayaqaPrefix}-select`">
         <template v-slot:no-option>
             <q-item>
                 <q-item-section class="text-grey">
@@ -11,10 +12,14 @@
         </template>
         <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
-                <q-item-section data-ayaqa="test-test">
-                    <q-item-label>{{ scope.opt[optionLabel] }}</q-item-label>
+                <q-item-section :data-ayaqa="`${ayaqaPrefix}-${scope.opt[optionValue]}`">
+                    <q-item-label>{{ (useChip ? `${scope.opt[chipLabel]}: ` : '') + scope.opt[optionLabel] }}
+                    </q-item-label>
                 </q-item-section>
             </q-item>
+        </template>
+        <template v-slot:selected-item="scope" v-if="useChip">
+            {{ scope.opt[optionLabel] ? scope.opt[chipLabel] + ': ' + scope.opt[optionLabel] : '' }}
         </template>
     </q-select>
 </template>
@@ -28,7 +33,10 @@ const props = defineProps({
     optionValue: { type: String, default: 'id' },
     optionLabel: { type: String, default: 'text' },
     width: { type: Number, default: null },
-    modelValue: { type: String, default: '' }
+    modelValue: { type: String, default: '' },
+    ayaqaPrefix: { type: String, default: '' },
+    useChip: { type: Boolean, required: false, default: () => false },
+    chipLabel: { type: String, required: false, default: 'text' }
 })
 
 const options = ref(props.options)

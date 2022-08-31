@@ -1,11 +1,12 @@
 <template>
     <div class="row no-wrap items-center">
         <div class="col-4 q-mr-sm">
-            <v-searchable-select v-model="selected.target" label="Target" :options="targetOptions" />
+            <v-searchable-select v-model="selected.target" label="Target" :options="targetOptions"
+                ayaqa-prefix="target" />
         </div>
         <div class="col-2">
             <v-searchable-select v-model="selected.applicable" label="Applicable to" :options="applicableOptions"
-                :width=150 />
+                :width=150 ayaqa-prefix="applicable" />
         </div>
         <div class="col-1 offset-5 text-right">
             <q-btn round flat icon="delete" size="sm" @click="removeRow(selected)" />
@@ -13,67 +14,32 @@
     </div>
     <div class="row q-mt-sm q-mb-sm items-center">
         <div class="col-1 text-right q-pr-sm">
-            <q-icon name="pest_control" size="md" :color="selectedBug?.description ? 'primary' : 'dark'">
-                <q-tooltip v-if="selectedBug?.description">
-                    {{ selectedBug.description }}
-                </q-tooltip>
+            <q-icon name="pest_control" size="md" :color="selectedBug?.description ? 'primary' : 'dark'"
+                :class="{ 'cursor-pointer': selectedBug?.description ?? false }"
+                @click="displayInDialog(selectedBug?.description ?? '')">
             </q-icon>
         </div>
         <div class="col-3 q-mr-sm">
-            <v-searchable-select v-model="selected.bug" label="Bug" :options="bugs" />
+            <v-searchable-select v-model="selected.bug" label="Bug" :options="bugs" ayaqa-prefix="bug" use-chip
+                chip-label="for" />
         </div>
-        <template
-            v-if="selectedBug?.configurable === CONFIGURABLE.WITH_PARAMS || selectedBug?.configurable === CONFIGURABLE.WITH_PARAM_KEY">
-            <div class="col-4 q-mr-sm">
-                <v-searchable-select v-model="selected.bugConfig.key" label="Paramter"
-                    :options="selectedTarget?.params" />
-            </div>
-            <div class="col-2" v-if="selectedBug.configurable === CONFIGURABLE.WITH_PARAMS">
-                <q-input outlined filled stack-label v-model="selected.bugConfig.value" label="Value" />
-            </div>
-        </template>
-        <template
-            v-if="selectedBug?.configurable === CONFIGURABLE.WITH_UI_ELEMENTS || selectedBug?.configurable === CONFIGURABLE.with_UI_ELEMENT_KEY">
-            <div class="col-4">
-                <v-searchable-select v-model="selected.bugConfig.key" label="UI Element"
-                    :options="selectedTarget?.elements" />
-            </div>
-            <div class="col-2" v-if="selectedBug.configurable === CONFIGURABLE.WITH_UI_ELEMENTS">
-                <q-input outlined filled stack-label v-model="selected.bugConfig.value" label="Value" />
-            </div>
-        </template>
+        <param-config v-model="selected.bugConfig" :config-type="selectedBug?.configType ?? CONFIG_TYPE.NONE"
+            :attributes="selectedTarget?.attributes" @click-value-info="displayValueInfo" />
     </div>
     <div class="row q-mt-sm items-center">
         <div class="col-1 text-right q-pr-sm">
-            <q-icon name="calculate" size="md" :color="selectedCondition?.description ? 'primary' : 'dark'">
-                <q-tooltip v-if="selectedCondition?.description">
-                    {{ selectedCondition.description }}
-                </q-tooltip>
+            <q-icon name="calculate" size="md" :color="selectedCondition?.description ? 'primary' : 'dark'"
+                @click="displayInDialog(selectedCondition?.description ?? '')"
+                :class="{ 'cursor-pointer': selectedCondition?.description ?? false }">
             </q-icon>
         </div>
         <div class="col-3 q-mr-sm">
-            <v-searchable-select v-model="selected.condition" label="Condition" :options="conditions" />
+            <v-searchable-select v-model="selected.condition" label="Condition" :options="conditions"
+                ayaqa-prefix="condition" />
         </div>
-        <template
-            v-if="selectedCondition?.configurable === CONFIGURABLE.WITH_PARAMS || selectedCondition?.configurable === CONFIGURABLE.WITH_PARAM_KEY">
-            <div class="col-4 q-mr-sm">
-                <v-searchable-select v-model="selected.conditionConfig.key" label="Paramter"
-                    :options="selectedTarget?.params" />
-            </div>
-            <div class="col-2" v-if="selectedCondition.configurable === CONFIGURABLE.WITH_PARAMS">
-                <q-input outlined filled stack-label v-model="selected.conditionConfig.value" label="Value" />
-            </div>
-        </template>
-        <template
-            v-if="selectedCondition?.configurable === CONFIGURABLE.WITH_UI_ELEMENTS || selectedCondition?.configurable === CONFIGURABLE.with_UI_ELEMENT_KEY">
-            <div class="col-4">
-                <v-searchable-select v-model="selected.conditionConfig.key" label="UI Element"
-                    :options="selectedTarget?.elements" />
-            </div>
-            <div class="col-2" v-if="selectedCondition.configurable === CONFIGURABLE.WITH_UI_ELEMENTS">
-                <q-input outlined filled stack-label v-model="selected.conditionConfig.value" label="Value" />
-            </div>
-        </template>
+        <param-config v-model="selected.conditionConfig"
+            :config-type="selectedCondition?.configType ?? CONFIG_TYPE.NONE" :attributes="selectedTarget?.attributes"
+            @click-value-info="displayValueInfo" />
     </div>
     <q-separator class="q-my-md" />
 </template>
@@ -81,6 +47,7 @@
 // @TODO Translate
 import { computed, watch } from 'vue'
 import type { ComputedRef } from 'vue'
+import { useQuasar } from 'quasar'
 
 import useModelValue from 'src/composables/use-model-value'
 import {
@@ -91,7 +58,9 @@ import {
     BugManifestInterface
 } from 'src/types/api/bug'
 
-import { APPLICABLE_TO, CONFIGURABLE } from 'src/consts'
+import { APPLICABLE_TO, CONFIG_TYPE } from 'src/consts'
+
+import ParamConfig from './param-config.vue'
 
 const props = defineProps({
     modelValue: {
@@ -112,13 +81,19 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'removeRow'])
 const selected = useModelValue<BugManifestInterface>(props, emit)
+const $q = useQuasar()
 
 watch(() => [selected.value.target, selected.value.applicable], (newValues, oldValues) => {
-    if (newValues[0] !== oldValues[0] && newValues[1] !== APPLICABLE_TO.BOTH) {
-        selected.value.applicable = APPLICABLE_TO.BOTH
+    if (newValues[0] !== oldValues[0] && newValues[1] !== APPLICABLE_TO.ANY) {
+        selected.value.applicable = APPLICABLE_TO.ANY
     }
 
-    clearSelectedBug(true)
+    let diff = newValues.filter(x => oldValues.includes(x))
+
+    // only if have diff in any call clearing blugs
+    if (diff.length != 2) {
+        clearSelectedBug(true)
+    }
 })
 
 watch(() => selected.value.bug, (newValue, oldValue) => {
@@ -156,7 +131,7 @@ const bugs = computed(() => {
     bugs = bugs.filter((itm, index) => bugs.indexOf(itm) === index)
 
     props.bugOptions.forEach(itm => {
-        if (itm.for != applicable) {
+        if (itm.for != applicable && applicable !== APPLICABLE_TO.ANY) {
             return
         }
 
@@ -213,6 +188,34 @@ function clearSelectedCondition (resetConfigs: boolean) {
     if (resetConfigs) {
         selected.value.conditionConfig = { key: '', value: '' }
     }
+}
+
+function displayInDialog (message: string) {
+    if (message === '') {
+        return
+    }
+
+    $q.dialog({
+        title: 'Usage info',
+        message,
+        ok: 'Ok'
+    })
+}
+
+function displayValueInfo () {
+
+    // @TODO locale
+    $q.dialog({
+        title: 'Usage info',
+        message: `
+        Values are <strong>not validated and might cause isssue with DB</strong>. 
+        Configure values only from same type as parameter!
+        <br /><br />
+        <strong>All values are compared lowercased.</strong>
+        <br /><br />Cast rules<ul><li>true / false (string) -> bool</li></ul>`,
+        html: true,
+        ok: 'Ok'
+    })
 }
 
 </script>

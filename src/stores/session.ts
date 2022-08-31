@@ -4,6 +4,7 @@ import { SessionStoreInterface } from 'src/types/store'
 import { fetchManifest, fetchBugs, storeBugs } from 'src/api/bug'
 import { BugManifestInterface } from 'src/types/api'
 import { APPLICABLE_TO } from 'src/consts'
+import { toRaw } from 'vue'
 
 export const useSessionStore = defineStore('session', {
     state: (): SessionStoreInterface => ({
@@ -50,7 +51,7 @@ export const useSessionStore = defineStore('session', {
         addEmptyBug () {
             this.bugs.push({
                 target: 'any',
-                applicable: APPLICABLE_TO.BOTH,
+                applicable: APPLICABLE_TO.ANY,
                 bug: '',
                 bugConfig: { key: '', value: '' },
                 condition: '',
@@ -72,9 +73,9 @@ export const useSessionStore = defineStore('session', {
         },
         async storeBugs () {
             try {
-                const response = await storeBugs([...this.bugs])
+                const resp = await storeBugs(toRaw(this.bugs))
 
-                this.bugs = response.data
+                this.bugs = resp.data
             } catch (error) {
                 return error
             }

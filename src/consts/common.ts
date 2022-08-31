@@ -5,21 +5,26 @@ const APP = {
 }
 
 enum APPLICABLE_TO {
+    ANY = 'any',
     BOTH = 'both',
     APP = 'app',
     API = 'api'
 }
 
-enum CONFIGURABLE {
+enum CONFIG_TYPE {
     NONE = 'none',
-    WITH_PARAMS = 'params',
-    WITH_PARAM_KEY = 'param-key',
 
-    WITH_UI_ELEMENTS = 'ui',
-    with_UI_ELEMENT_KEY = 'ui-key',
+    REQ_PARAMETERS = 'req-params',
+    REQ_PARAMETER_KEY = 'req-param-key',
 
-    WITH_CUSTOM = 'custom',
-    WITH_CUSTOM_KEY = 'custom-key'
+    RESP_PARAMETERS = 'resp-params',
+    RESP_PARAMETER_KEY = 'resp-param-key',
+
+    UI_ELEMENTS = 'ui',
+    UI_ELEMENT_KEY = 'ui-key',
+
+    CUSTOM = 'custom',
+    CUSTOM_KEY = 'custom-key',
 }
 
 enum SESSION_STATE {
@@ -33,6 +38,6 @@ enum SESSION_STATE {
 export {
     APP,
     APPLICABLE_TO,
-    CONFIGURABLE,
+    CONFIG_TYPE,
     SESSION_STATE
 }

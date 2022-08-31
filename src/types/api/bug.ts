@@ -1,4 +1,4 @@
-import { APPLICABLE_TO, CONFIGURABLE } from 'src/consts'
+import { APPLICABLE_TO, CONFIG_TYPE } from 'src/consts'
 
 
 export interface MinimalItemInterface {
@@ -6,11 +6,16 @@ export interface MinimalItemInterface {
     text: string,
 }
 
+export interface TargetManifestAttributesInterface {
+    ui: Array<MinimalItemInterface>,
+    reqParams: Array<MinimalItemInterface>,
+    respParams: Array<MinimalItemInterface>,
+}
+
 export interface TargetManifestItemInterface extends MinimalItemInterface {
     id: string,
     text: string,
-    elements: Array<MinimalItemInterface>,
-    params: Array<MinimalItemInterface>,
+    attributes: TargetManifestAttributesInterface
     bugs: Array<string>
 }
 
@@ -18,20 +23,20 @@ export interface BugManifestItemInterface extends MinimalItemInterface {
     id: string,
     text: string,
     for: APPLICABLE_TO,
-    configurable: CONFIGURABLE,
+    configType: CONFIG_TYPE,
     conditions: Array<string>,
     description?: string
 }
 
 export interface ConfigurableManifestInterface {
-    key: string,
-    value: string,
+    key: string | null,
+    value: string | null,
 }
 
 export interface ConditionManifestItemInterface extends MinimalItemInterface {
     id: string,
     text: string,
-    configurable: CONFIGURABLE,
+    configType: CONFIG_TYPE,
     description?: string
 }
 

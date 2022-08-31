@@ -1,4 +1,4 @@
-import { Quasar, Notify } from 'quasar'
+import { Quasar, Notify, Dialog } from 'quasar'
 
 import 'quasar/src/css/index.sass'
 
@@ -8,7 +8,8 @@ const config = {
   lang: 'en',
   cssAddon: true,
   plugins: {
-    Notify
+    Notify,
+    Dialog
   },
   config: {
     brand: {
