@@ -35,9 +35,17 @@ enum SESSION_STATE {
     READY = 'ready'
 }
 
+enum CONFIGURED_BUGS {
+    DETACH_SAVE_BTN = 'detach-ui-save',
+    HIDE_UI_ELEMENT = 'hide-ui-el',
+    UPDATE_UI_LABEL = 'update-ui-label'
+
+}
+
 export {
     APP,
     APPLICABLE_TO,
     CONFIG_TYPE,
-    SESSION_STATE
+    SESSION_STATE,
+    CONFIGURED_BUGS
 }

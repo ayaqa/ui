@@ -1,5 +1,4 @@
-import { APPLICABLE_TO, CONFIG_TYPE } from 'src/consts'
-
+import { APPLICABLE_TO, CONFIG_TYPE, CONFIGURED_BUGS } from 'src/consts'
 
 export interface MinimalItemInterface {
     id: string,
@@ -54,4 +53,37 @@ export interface ManifestResponseInterface {
     bugs: Array<BugManifestItemInterface>,
     conditions: Array<ConditionManifestItemInterface>,
     applicable: Array<MinimalItemInterface>
+}
+
+
+// configured bugs
+export interface ConfiguredBugGenericConfig {
+    key: null | string,
+    value: null | boolean | string
+}
+
+export interface ConfiguredBugConfig {
+    isAlways: boolean
+    bugConfig: ConfiguredBugGenericConfig,
+    conditionConfig: ConfiguredBugGenericConfig
+}
+
+export interface DynamicConfiguredBug {
+    [key: string]: ConfiguredBugConfig
+}
+
+export interface ConfiguredBugsResponseInterface {
+    areHashed: boolean,
+    bugs: string
+}
+
+export interface ConfiguredBugsStoreItemInterface {
+    [CONFIGURED_BUGS.DETACH_SAVE_BTN]?: DynamicConfiguredBug,
+    [CONFIGURED_BUGS.HIDE_UI_ELEMENT]?: DynamicConfiguredBug,
+    [CONFIGURED_BUGS.UPDATE_UI_LABEL]?: DynamicConfiguredBug
+}
+
+export interface ConfiguredBugsStoreInterface {
+    areHashed: boolean,
+    bugs: ConfiguredBugsStoreItemInterface | null
 }

@@ -6,6 +6,8 @@ import { BugManifestInterface } from 'src/types/api'
 import { APPLICABLE_TO } from 'src/consts'
 import { toRaw } from 'vue'
 
+import { useBugStore } from './bugs'
+
 export const useSessionStore = defineStore('session', {
     state: (): SessionStoreInterface => ({
         meta: {
@@ -72,10 +74,14 @@ export const useSessionStore = defineStore('session', {
             this.fetchConfiguredBugs()
         },
         async storeBugs () {
+            const bugStore = useBugStore()
+
             try {
                 const resp = await storeBugs(toRaw(this.bugs))
 
                 this.bugs = resp.data
+
+                await bugStore.fetchBugs()
             } catch (error) {
                 return error
             }
