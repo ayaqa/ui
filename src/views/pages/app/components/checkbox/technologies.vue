@@ -1,15 +1,20 @@
 <template>
-    <v-test-card :title="t('technologies.title')" :id="UI_SECTIONS.CHECKBOX_2" @onSave="onSave" :loading="loading">
-        <div class="q-gutter-md">
-            <q-checkbox v-model="multi" val="2g" :label="label['2g']" color="primary" v-if="!isHidden['2g']" />
-            <q-checkbox v-model="multi" val="3g" :label="label['3g']" color="primary" v-if="!isHidden['3g']" />
-            <q-checkbox v-model="multi" val="4g" :label="label['4g']" color="primary" v-if="!isHidden['4g']" />
-            <q-checkbox v-model="multi" val="5g" :label="label['5g']" color="primary" v-if="!isHidden['5g']" />
+    <v-test-card :title="t('technologies.title')" :id="UI_SECTIONS.CHECKBOX_2" @onSave="onSave" :loading="request">
+        <q-skeleton type="QRange" v-if="loading" />
+        <div class="q-gutter-md" v-if="!loading">
+            <q-checkbox v-model="multi" :val="RADIO_KEYS.G2" :label="label[RADIO_KEYS.G2]" color="primary"
+                v-if="!isHiddenMap[RADIO_KEYS.G2]" />
+            <q-checkbox v-model="multi" :val="RADIO_KEYS.G3" :label="label[RADIO_KEYS.G3]" color="primary"
+                v-if="!isHiddenMap[RADIO_KEYS.G3]" />
+            <q-checkbox v-model="multi" :val="RADIO_KEYS.G4" :label="label[RADIO_KEYS.G4]" color="primary"
+                v-if="!isHiddenMap[RADIO_KEYS.G4]" />
+            <q-checkbox v-model="multi" :val="RADIO_KEYS.G5" :label="label[RADIO_KEYS.G5]" color="primary"
+                v-if="!isHiddenMap[RADIO_KEYS.G5]" />
         </div>
     </v-test-card>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import { UI_SECTIONS } from 'src/consts'
 import { useI18n } from 'vue-i18n'
@@ -17,36 +22,54 @@ import { fetchTechnologies, storeTechnologies } from 'src/api/checkbox'
 import { TechnologiesResponseInterface, TechnologiesRadiosInterface } from 'src/types/api'
 import useConfiguredBugs from 'src/composables/use-configured-bugs'
 
-const configuredBugs = useConfiguredBugs()
 
 const { t } = useI18n()
 const multi: Ref<string[]> = ref([])
 const loading = ref(true)
+const request = ref(false)
 
-// bugs
-const isHidden = {
-    '2g': configuredBugs.isHidden(UI_SECTIONS.CHECKBOX_2, '2g'),
-    '3g': configuredBugs.isHidden(UI_SECTIONS.CHECKBOX_2, '3g'),
-    '4g': configuredBugs.isHidden(UI_SECTIONS.CHECKBOX_2, '4g'),
-    '5g': configuredBugs.isHidden(UI_SECTIONS.CHECKBOX_2, '5g'),
+enum RADIO_KEYS {
+    G2 = '2g',
+    G3 = '3g',
+    G4 = '4g',
+    G5 = '5g'
 }
-const isButtonDetached = configuredBugs.isSaveButtonDetached(UI_SECTIONS.CHECKBOX_2)
+
+// bugs related code {{{
+const configuredBugs = useConfiguredBugs()
+const { isHidden, isSaveButtonDetached, getLabel } = configuredBugs
+
+const isHiddenMap = {
+    [RADIO_KEYS.G2]: isHidden(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G2),
+    [RADIO_KEYS.G3]: isHidden(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G3),
+    [RADIO_KEYS.G4]: isHidden(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G4),
+    [RADIO_KEYS.G5]: isHidden(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G5),
+}
 const label = {
-    '2g': configuredBugs.getLabel(UI_SECTIONS.CHECKBOX_2, '2g') ?? t('technologies.2g'),
-    '3g': configuredBugs.getLabel(UI_SECTIONS.CHECKBOX_2, '3g') ?? t('technologies.3g'),
-    '4g': configuredBugs.getLabel(UI_SECTIONS.CHECKBOX_2, '4g') ?? t('technologies.4g'),
-    '5g': configuredBugs.getLabel(UI_SECTIONS.CHECKBOX_2, '5g') ?? t('technologies.5g'),
+    [RADIO_KEYS.G2]: getLabel(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G2) ?? t('technologies.2g'),
+    [RADIO_KEYS.G3]: getLabel(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G3) ?? t('technologies.3g'),
+    [RADIO_KEYS.G4]: getLabel(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G4) ?? t('technologies.4g'),
+    [RADIO_KEYS.G5]: getLabel(UI_SECTIONS.CHECKBOX_2, RADIO_KEYS.G5) ?? t('technologies.5g'),
 }
+
+let isButtonDetached = saveButtonDetached(multi.value)
+watch(multi, (newValue) => {
+    isButtonDetached = saveButtonDetached(newValue)
+})
+// }}}
 
 // ui logic
 fetchTechnologies().then((result) => {
     handleResponse(result.data)
+}).finally(() => {
+    loading.value = false
+    request.value = false
 })
 
 function onSave () {
     if (isButtonDetached) return // bug
 
-    loading.value = true
+    request.value = true
 
     let requestData: TechnologiesRadiosInterface = {}
     multi.value.forEach((key) => {
@@ -55,12 +78,13 @@ function onSave () {
 
     storeTechnologies(requestData).then((result) => {
         handleResponse(result.data)
+    }).finally(() => {
+        loading.value = false
+        request.value = false
     })
 }
 
 function handleResponse (data: TechnologiesResponseInterface) {
-    loading.value = false
-
     let radios: string[] = []
     Object.keys(data.radio).forEach((key) => {
         if (data.radio[key as keyof TechnologiesRadiosInterface] === true) {
@@ -69,6 +93,15 @@ function handleResponse (data: TechnologiesResponseInterface) {
     })
 
     multi.value = radios
+}
+
+function saveButtonDetached (newValue: string[]) {
+    return isSaveButtonDetached(UI_SECTIONS.CHECKBOX_2, {
+        [RADIO_KEYS.G2]: newValue.indexOf(RADIO_KEYS.G2) !== -1,
+        [RADIO_KEYS.G3]: newValue.indexOf(RADIO_KEYS.G3) !== -1,
+        [RADIO_KEYS.G4]: newValue.indexOf(RADIO_KEYS.G4) !== -1,
+        [RADIO_KEYS.G5]: newValue.indexOf(RADIO_KEYS.G5) !== -1
+    })
 }
 
 </script>

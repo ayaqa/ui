@@ -87,3 +87,7 @@ export interface ConfiguredBugsStoreInterface {
     areHashed: boolean,
     bugs: ConfiguredBugsStoreItemInterface | null
 }
+
+export interface DyanmicKeysObject {
+    [key: string]: any
+}

@@ -1,6 +1,7 @@
 
 import { useBugStore } from 'src/stores/bugs'
 import { CONFIGURED_BUGS } from 'src/consts'
+import { DyanmicKeysObject } from 'src/types/api'
 
 export default function useConfiguredBugs () {
     const bugStore = useBugStore()
@@ -9,8 +10,20 @@ export default function useConfiguredBugs () {
         return handleCheck(CONFIGURED_BUGS.HIDE_UI_ELEMENT, sectionId, elementKey)
     }
 
-    function isSaveButtonDetached (sectionId: string) {
-        return handleCheck(CONFIGURED_BUGS.DETACH_SAVE_BTN, sectionId)
+    function isSaveButtonDetached (sectionId: string, props: DyanmicKeysObject = {}): boolean {
+        let isMet = handleCheck(CONFIGURED_BUGS.DETACH_SAVE_BTN, sectionId)
+
+        if (false === isMet) {
+            const conditionConfig = bugStore.getConditionConfig(CONFIGURED_BUGS.DETACH_SAVE_BTN, sectionId)
+            if (conditionConfig?.key && props && typeof props?.[conditionConfig.key] !== undefined) {
+                const conditionValue = castValue(conditionConfig.value)
+                const currentValue = castValue(props[conditionConfig.key])
+
+                isMet = currentValue === conditionValue
+            }
+        }
+
+        return isMet
     }
 
     function getLabel (sectionId: string, elementKey: string): string | null {
@@ -42,6 +55,18 @@ export default function useConfiguredBugs () {
         }
 
         return isAlways
+    }
+
+    function castValue (value: any) {
+        if (value === 'true' || value === 'false') {
+            return value === 'true'
+        }
+
+        if (value === undefined) {
+            return ''
+        }
+
+        return value
     }
 
     return {

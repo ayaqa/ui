@@ -13,7 +13,8 @@ export const useBugStore = defineStore('bugs', {
         areKeysHashed (state): boolean { return state.areHashed },
         hasBugs: (state) => (bugType: CONFIGURED_BUGS) => state.bugs?.[bugType],
         isAlways: (state) => (bugType: CONFIGURED_BUGS, bugId: string): boolean => state.bugs?.[bugType]?.[bugId]?.isAlways === true,
-        getBugConfig: (state) => (bugType: CONFIGURED_BUGS, bugId: string): ConfiguredBugGenericConfig | undefined => state.bugs?.[bugType]?.[bugId]?.bugConfig
+        getBugConfig: (state) => (bugType: CONFIGURED_BUGS, bugId: string): ConfiguredBugGenericConfig | undefined => state.bugs?.[bugType]?.[bugId]?.bugConfig,
+        getConditionConfig: (state) => (bugType: CONFIGURED_BUGS, bugId: string): ConfiguredBugGenericConfig | undefined => state.bugs?.[bugType]?.[bugId]?.conditionConfig,
     },
     actions: {
         async fetchBugs () {
